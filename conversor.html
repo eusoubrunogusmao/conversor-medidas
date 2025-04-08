@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Conversor de Medidas do BG</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    h3 {
+      text-align: center;
+    }
+    label, select, input, button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Conversor de Medidas</h1>
+  <h3>ByBG</h3>
+  <label for="valor">Valor:</label>
+  <input type="number" id="valor" min="0" step="any">
+
+  <label for="entrada">Converter de:</label>
+  <select id="entrada">
+    <option value="m">Metro (m)</option>
+    <option value="cm">Centímetro (cm)</option>
+    <option value="km">Quilômetro (km)</option>
+  </select>
+
+  <label for="saida">Para:</label>
+  <select id="saida">
+    <option value="m">Metro (m)</option>
+    <option value="cm">Centímetro (cm)</option>
+    <option value="km">Quilômetro (km)</option>
+  </select>
+
+  <button onclick="converter()">Converter</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    function converter() {
+      const valor = parseFloat(document.getElementById('valor').value);
+      const entrada = document.getElementById('entrada').value;
+      const saida = document.getElementById('saida').value;
+      const resultadoDiv = document.getElementById('resultado');
+
+      if (isNaN(valor) || valor < 0) {
+        resultadoDiv.textContent = "Por favor, insira um valor numérico válido!";
+        return;
+      }
+
+      let valorEmMetros;
+
+      // Converter para metros primeiro
+      switch (entrada) {
+        case 'm': valorEmMetros = valor; break;
+        case 'cm': valorEmMetros = valor / 100; break;
+        case 'km': valorEmMetros = valor * 1000; break;
+      }
+
+      // Converter de metros para destino
+      let resultado;
+      switch (saida) {
+        case 'm': resultado = valorEmMetros; break;
+        case 'cm': resultado = valorEmMetros * 100; break;
+        case 'km': resultado = valorEmMetros / 1000; break;
+      }
+
+      resultadoDiv.textContent = `${valor} ${entrada} = ${resultado.toFixed(2)} ${saida}`;
+    }
+  </script>
+
+</body>
+</html>
